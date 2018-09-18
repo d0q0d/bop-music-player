@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="design_navigation_icon_padding">25dp</dimen>
+    <dimen name="spacing_card_album_grid">4dp</dimen>
+    <dimen name="spacing_card">16dp</dimen>
+    <dimen name="text_vertical_divider_height">8.0dip</dimen>
+    <dimen name="linear_layout_list_text_line_space">6.0dip</dimen>
+    <dimen name="gird_layout_list_subtitle_2_max_width">80.0dip</dimen>
+    <dimen name="grid_layout_list_item_info_height">60.0dip</dimen>
+    <dimen name="linear_layout_list_item_padding">16.0dip</dimen>
+    <dimen name="grid_layout_list_text_line_space">4.0dip</dimen>
+    <dimen name="gird_layout_list_subtitle_max_width">80.0dip</dimen>
+
+</resources>

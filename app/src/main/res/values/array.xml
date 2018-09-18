@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="dialog">
+        <item>Add to playlist</item>
+        <item>Go to album</item>
+        <item>Go to artist</item>
+        <item>Share</item>
+        <item>Delete from device</item>
+
+    </array>
+
+    <array name="shuffle">
+        <item>Shuffle off</item>
+        <item>Shuffle on</item>
+
+    </array>
+    <array name="repeat">
+        <item>Repeat off</item>
+        <item>Repeat one</item>
+        <item>Repeat all</item>
+
+    </array>
+</resources>

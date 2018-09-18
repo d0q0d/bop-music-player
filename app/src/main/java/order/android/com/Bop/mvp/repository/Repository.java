@@ -1,0 +1,48 @@
+package order.android.com.Bop.mvp.repository;
+
+import java.util.List;
+import order.android.com.Bop.mvp.model.Album;
+import order.android.com.Bop.mvp.model.Artist;
+import order.android.com.Bop.mvp.model.Playlist;
+import order.android.com.Bop.mvp.model.Song;
+import rx.Observable;
+
+
+public interface Repository {
+
+    //form local
+
+    Observable<List<Album>> getAllAlbums();
+
+    Observable<Album> getAlbum(long id);
+
+    Observable<List<Album>> getAlbums(String paramString);
+
+    Observable<List<Song>> getSongsForAlbum(long albumID);
+
+    Observable<List<Album>> getAlbumsForArtist(long artistID);
+
+    Observable<List<Artist>> getAllArtists();
+
+    Observable<Artist> getArtist(long artistID);
+
+    Observable<List<Artist>> getArtists(String paramString);
+
+    Observable<List<Song>> getSongsForArtist(long artistID);
+
+
+    Observable<List<Playlist>> getPlaylists(boolean defaultIncluded);
+
+    Observable<List<Song>> getSongsInPlaylist(long playlistID);
+
+    Observable<List<Song>> getQueueSongs();
+
+    Observable<List<Song>> getAllSongs();
+
+    Observable<List<Song>> searchSongs(String searchString);
+
+
+    Observable<List<Song>> getSongsInFolder(String path);
+
+    Observable<List<Object>> getSearchResult(String queryString);
+}
