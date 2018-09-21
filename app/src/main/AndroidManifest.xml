@@ -11,7 +11,7 @@
 
     <supports-screens
         android:largeScreens="true"
-        android:normalScreens="true"
+        android:normalScreens="false"
         android:smallScreens="false"
         android:xlargeScreens="true" />
 
