@@ -6,17 +6,15 @@ android {
         applicationId "com.android.bopapp"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 3
-        versionName "2.1.0"
+        versionCode 4
+        versionName "2.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
     }
-    buildTypes {
+        buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
-            useProguard false
+//            useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
