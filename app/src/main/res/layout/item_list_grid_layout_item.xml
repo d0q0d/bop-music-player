@@ -60,18 +60,12 @@
                     android:id="@+id/text_item_subtitle"
                     android:layout_width="wrap_content"
                     android:gravity="left"
+                    android:singleLine="true"
                     android:layout_height="wrap_content"
                     android:maxWidth="@dimen/gird_layout_list_subtitle_max_width"
                     android:layout_centerVertical="true"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
-                <TextView
-                    android:id="@+id/text_item_subtitle_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxWidth="@dimen/gird_layout_list_subtitle_2_max_width"
-                    android:layout_centerVertical="true"
-                    style="@style/ListItemSubTitleStyle" />
 
             </RelativeLayout>
 
