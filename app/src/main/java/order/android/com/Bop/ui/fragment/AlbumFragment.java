@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -44,12 +46,13 @@ public class AlbumFragment extends Fragment implements AlbumsContract.View {
     @Inject
     AlbumsContract.Presenter mPresenter;
     @BindView(R.id.main_recyclerview)
-    RecyclerView recyclerView;
+    FastScrollRecyclerView recyclerView;
     @BindView(R.id.main_view_empty)
     View emptyView;
     private AlbumAdapter mAdapter;
     private RecyclerView.ItemDecoration itemDecoration;
     private PreferencesUtility mPreferences;
+    private GridLayoutManager gridLayoutManager;
     private String action;
 
     public static AlbumFragment newInstance(String action) {
@@ -73,6 +76,7 @@ public class AlbumFragment extends Fragment implements AlbumsContract.View {
         super.onCreate(savedInstanceState);
         injectDependences();
         mPresenter.attachView(this);
+        gridLayoutManager=new GridLayoutManager(getActivity(),2);
         mPreferences = PreferencesUtility.getInstance(getActivity());
         if (getArguments() != null) {
             action = getArguments().getString(Constants.PLAYLIST_TYPE);
@@ -100,20 +104,12 @@ public class AlbumFragment extends Fragment implements AlbumsContract.View {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
-        //recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(mAdapter);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemViewCacheSize(20);
-        recyclerView.setDrawingCacheEnabled(true);
-        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         setItemDecoration();
         mPreferences.setAlbumSortOrder(SortOrder.AlbumSortOrder.ALBUM_A_Z);
         mPresenter.loadAlbums(action);
         subscribeMediaUpdateEvent();
-        subscribeMediaUpdateEvent();
-
-
 
     }
 

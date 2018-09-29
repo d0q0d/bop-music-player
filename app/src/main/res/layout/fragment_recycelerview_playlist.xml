@@ -27,7 +27,7 @@
             app:srcCompat="@drawable/ic_playlist_add" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/time1"
             style="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         android:layout_height="match_parent"
         android:layout="@layout/layout_empty_view_default" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
         android:id="@+id/main_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

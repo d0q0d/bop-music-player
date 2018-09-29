@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -71,15 +70,15 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
     TextView mArtist;
     @BindView(R.id.cover_imageView)
     ImageView mAlbumArt;
-    @BindView(R.id.imageButton4)
+    @BindView(R.id.rewind)
     ImageButton previous;
-    @BindView(R.id.imageButton3)
+    @BindView(R.id.forward)
     ImageButton next;
     @BindView(R.id.seekBar3)
     SeekBar mSeekBar;
     @BindView(R.id.popup_menu_quick)
     ImageView popupMenu;
-    @BindView(R.id.textView)
+    @BindView(R.id.time1)
     TextView duration;
     @BindView(R.id.upIndicator)
     ImageView upIndicator;
@@ -87,11 +86,11 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
     ImageView playqueue;
     @BindView(R.id.shuffle_repeat_button)
     ImageButton shuffle_repeat_button;
-    @BindView(R.id.textView2)
+    @BindView(R.id.time2)
     TextView duration2;
     SeekBar volumeSeekbar = null;
     AudioManager audioManager = null;
-    @BindView(R.id.imageView123)
+    @BindView(R.id.arrow_up_black)
     ImageView imageView123;
     private SlidingUpPanelLayout mSlidingUpPanelLayout;
     private boolean mIsFavorite = false;
@@ -316,7 +315,7 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
     }
 
 
-    @OnClick(R.id.imageButton3)
+    @OnClick(R.id.forward)
     public void onNextClick() {
         mPresenter.onNextClick();
     }
@@ -334,7 +333,7 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
         }
     }
 
-    @OnClick(R.id.imageButton4)
+    @OnClick(R.id.rewind)
     public void onPreviousClick() {
         mPresenter.onPreviousClick();
     }

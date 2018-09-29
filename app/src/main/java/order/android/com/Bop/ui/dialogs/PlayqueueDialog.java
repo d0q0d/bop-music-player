@@ -18,6 +18,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,7 +41,7 @@ public class PlayqueueDialog extends DialogFragment implements PlayqueueSongCont
     @Inject
     PlayqueueSongContract.Presenter mPresenter;
     @BindView(R.id.recycler_view_songs)
-    RecyclerView recyclerView;
+    FastScrollRecyclerView recyclerView;
     @BindView(R.id.bottomsheet)
     LinearLayout root;
 

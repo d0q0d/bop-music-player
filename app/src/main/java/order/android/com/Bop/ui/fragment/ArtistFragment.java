@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -43,7 +45,7 @@ public class ArtistFragment extends Fragment implements ArtistContract.View {
     @Inject
     ArtistContract.Presenter mPresenter;
     @BindView(R.id.main_recyclerview)
-    RecyclerView recyclerView;
+    FastScrollRecyclerView recyclerView;
     @BindView(R.id.main_view_empty)
     View emptyView;
     private ArtistAdapter mAdapter;

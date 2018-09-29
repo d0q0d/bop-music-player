@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,7 +46,7 @@ public class PlaylistFragment extends Fragment implements PlaylistContract.View 
     @Inject
     PlaylistContract.Presenter mPresenter;
     @BindView(R.id.main_recyclerview)
-    RecyclerView recyclerView;
+    FastScrollRecyclerView recyclerView;
     @BindView(R.id.main_view_empty)
     View emptyView;
     @BindView(R.id.playlist_new)

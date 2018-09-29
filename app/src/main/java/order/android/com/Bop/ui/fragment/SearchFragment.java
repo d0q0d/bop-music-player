@@ -24,6 +24,8 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.inputmethod.InputMethodManager;
 
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -57,7 +59,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.recyclerview)
-    RecyclerView recyclerView;
+    FastScrollRecyclerView recyclerView;
     @BindView(R.id.view_empty)
     ViewStub emptyView;
 

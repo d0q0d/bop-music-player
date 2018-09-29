@@ -9,7 +9,7 @@
 <View
     android:layout_width="match_parent"
     android:layout_height="6dp"/>
-    <android.support.v7.widget.RecyclerView
+    <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
         android:id="@+id/recycler_view_songs"
         android:layout_width="match_parent"
         android:layout_height="320dp"

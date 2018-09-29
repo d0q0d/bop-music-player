@@ -8,7 +8,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView123"
+        android:id="@+id/arrow_up_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -108,7 +108,7 @@
         app:layout_constraintVertical_bias="0.473">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/speaker_low"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
@@ -144,7 +144,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/speaker_high"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginBottom="35dp"
@@ -249,7 +249,7 @@
 
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/rewind"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -287,7 +287,7 @@
             playpauseview:isCircleDraw="true" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/forward"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -322,7 +322,7 @@
         app:layout_constraintVertical_bias="1.0">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/time1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -359,7 +359,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/time2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"

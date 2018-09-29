@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,7 +41,7 @@ public class ArtistMusicFragment extends Fragment implements ArtistSongContract.
     @Inject
     ArtistSongContract.Presenter mPresenter;
     @BindView(R.id.recycler_view_artist_song)
-    RecyclerView songsRecyclerview;
+    FastScrollRecyclerView songsRecyclerview;
     private long artistID = -1;
     ArtistSongAdapter mSongAdapter;
 

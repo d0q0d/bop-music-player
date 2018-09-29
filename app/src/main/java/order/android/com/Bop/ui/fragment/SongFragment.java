@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -48,7 +50,7 @@ public class SongFragment extends Fragment implements SongsContract.View {
     @Inject
     SongsContract.Presenter mPresenter;
     @BindView(R.id.main_recyclerview)
-    RecyclerView recyclerView;
+    FastScrollRecyclerView recyclerView;
     @BindView(R.id.main_view_empty)
     ViewStub emptyView;
     private SongsListAdapter mAdapter;

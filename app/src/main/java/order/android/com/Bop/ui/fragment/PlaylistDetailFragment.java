@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -54,7 +56,7 @@ public class PlaylistDetailFragment extends Fragment implements PlaylistDetailCo
     @BindView(R.id.toolbar_album_detail)
     Toolbar toolbar;
     @BindView(R.id.recyclerView_album_detail)
-    RecyclerView recyclerView;
+    FastScrollRecyclerView recyclerView;
 
     private Context mContext;
     private PlaylistSongAdapter mAdapter;
