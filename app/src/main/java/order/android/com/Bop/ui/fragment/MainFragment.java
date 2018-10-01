@@ -91,7 +91,7 @@ public class MainFragment extends Fragment {
         if (viewPager != null) {
             setupViewPager(viewPager);
             setTapIcon();
-            viewPager.setOffscreenPageLimit(3);
+
             viewPager.setCurrentItem(mPreferences.getStartPageIndex());
         }
 
@@ -105,6 +105,7 @@ public class MainFragment extends Fragment {
         adapter.addFragment(SongFragment.newInstance(action));
         adapter.addFragment(PlaylistFragment.newInstance(action));
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
     }
 
     @Override
