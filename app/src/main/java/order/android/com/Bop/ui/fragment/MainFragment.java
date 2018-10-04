@@ -130,10 +130,10 @@ public class MainFragment extends Fragment {
             super(fm);
         }
 
-        public void addFragment(Fragment fragment, String title) {
+       /* public void addFragment(Fragment fragment, String title) {
             mFragments.add(fragment);
             mFragmentTitles.add(title);
-        }
+        }*/
 
         public void addFragment(Fragment fragment) {
             mFragments.add(fragment);

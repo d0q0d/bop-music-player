@@ -275,6 +275,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:clickable="true"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintLeft_toLeftOf="parent"
