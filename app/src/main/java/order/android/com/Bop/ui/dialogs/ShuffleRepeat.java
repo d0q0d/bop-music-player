@@ -26,11 +26,10 @@ import co.ceryle.radiorealbutton.RadioRealButtonGroup;
 import order.android.com.Bop.MusicPlayer;
 import order.android.com.Bop.MusicService;
 import order.android.com.Bop.R;
+import order.android.com.Bop.ui.activity.MainActivity;
 import order.android.com.Bop.util.PlayModePreferences;
 
 public class ShuffleRepeat extends android.support.v4.app.DialogFragment {
-    protected PlayModePreferences repeat;
-    protected PlayModePreferences shuffle;
     @BindView(R.id.rootShuffleRepeat)
     ConstraintLayout rootShuffleRepeat;
     @BindView(R.id.radioRealButtonGroupRepeat)
@@ -38,9 +37,7 @@ public class ShuffleRepeat extends android.support.v4.app.DialogFragment {
     @BindView(R.id.radioRealButtonGroupShuffle)
     RadioRealButtonGroup radioRealButtonGroupShuffle;
     private Palette.Swatch mSwatch;
-    private PlayMode mPlayMode;
-    int repeatState;
-    int shuffleState;
+
 
     @Override
     public void onStart() {
@@ -59,30 +56,6 @@ public class ShuffleRepeat extends android.support.v4.app.DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        repeat = new PlayModePreferences(context);
-        shuffle = new PlayModePreferences(context);
-         repeatState=repeat.getItemIndexrepeat();
-         shuffleState=shuffle.getItemIndexshuffle();
-        if (repeatState == 0) {
-            mPlayMode = PlayMode.REPEATOFF;
-            MusicPlayer.setRepeatMode(MusicService.REPEAT_NONE);
-
-        } else if (repeatState == 1) {
-            mPlayMode = PlayMode.REPEATONE;
-            MusicPlayer.setRepeatMode(MusicService.REPEAT_CURRENT);
-
-
-        } else if (repeatState == 2) {
-            mPlayMode = PlayMode.REPEATALL;
-            MusicPlayer.setRepeatMode(MusicService.REPEAT_ALL);
-        }
-        if (shuffleState == 0) {
-            mPlayMode = PlayMode.SHUFFLEOFF;
-            MusicPlayer.setShuffleMode(MusicService.SHUFFLE_NONE);
-        } else if (shuffleState == 1) {
-            mPlayMode = PlayMode.SHUFFLEALL;
-            MusicPlayer.setShuffleMode(MusicService.SHUFFLE_AUTO);
-        }
     }
 
     @Override
@@ -106,46 +79,42 @@ public class ShuffleRepeat extends android.support.v4.app.DialogFragment {
         if (mSwatch != null) {
             rootShuffleRepeat.setBackgroundColor(mSwatch.getRgb());
         }
-       /* int repeatState=repeat.getItemIndexrepeat();
-        int shuffleState=shuffle.getItemIndexshuffle();*/
-        radioRealButtonGroupShuffle.setPosition(shuffleState);
-        radioRealButtonGroupReapet.setPosition(repeatState);
+        radioRealButtonGroupShuffle.setPosition(MainActivity.shuffleState);
+        radioRealButtonGroupReapet.setPosition(MainActivity.repeatState);
         radioRealButtonGroupReapet.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
             @Override
             public void onClickedButton(RadioRealButton button, int position) {
 
                 if (position == 0) {
-                    repeat.saveItemIndexrepeat(position);
-                    mPlayMode = PlayMode.REPEATOFF;
+                    MainActivity.repeatMain.saveItemIndexrepeat(position);
+                    MainActivity.mPlayMode = MainActivity.PlayMode.REPEATOFF;
                     MusicPlayer.setRepeatMode(MusicService.REPEAT_NONE);
 
                 } else if (position == 1) {
-                    repeat.saveItemIndexrepeat(position);
-                    mPlayMode = PlayMode.REPEATONE;
+                    MainActivity.repeatMain.saveItemIndexrepeat(position);
+                    MainActivity.mPlayMode = MainActivity.PlayMode.REPEATONE;
                     MusicPlayer.setRepeatMode(MusicService.REPEAT_CURRENT);
 
 
                 } else if (position == 2) {
-                    repeat.saveItemIndexrepeat(position);
-                    mPlayMode = PlayMode.REPEATALL;
+                    MainActivity.repeatMain.saveItemIndexrepeat(position);
+                    MainActivity.mPlayMode = MainActivity.PlayMode.REPEATALL;
                     MusicPlayer.setRepeatMode(MusicService.REPEAT_ALL);
                 }
-               // Toast.makeText(getActivity(), "Clicked! Position: " + position, Toast.LENGTH_SHORT).show();
             }
         });
         radioRealButtonGroupShuffle.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
             @Override
             public void onClickedButton(RadioRealButton button, int position) {
                 if (position == 0) {
-                    shuffle.saveItemIndexshuffle(position);
-                    mPlayMode = PlayMode.SHUFFLEOFF;
+                    MainActivity.shuffleMain.saveItemIndexshuffle(position);
+                    MainActivity.mPlayMode = MainActivity.PlayMode.SHUFFLEOFF;
                     MusicPlayer.setShuffleMode(MusicService.SHUFFLE_NONE);
                 } else if (position == 1) {
-                    shuffle.saveItemIndexshuffle(position);
-                    mPlayMode = PlayMode.SHUFFLEALL;
+                    MainActivity.shuffleMain.saveItemIndexshuffle(position);
+                    MainActivity.mPlayMode = MainActivity.PlayMode.SHUFFLEALL;
                     MusicPlayer.setShuffleMode(MusicService.SHUFFLE_AUTO);
                 }
-             //Toast.makeText(getActivity(), "Clicked! Position: " + position, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -175,14 +144,6 @@ public class ShuffleRepeat extends android.support.v4.app.DialogFragment {
 
     public void dismiss() {
         getDialog().dismiss();
-    }
-
-    public enum PlayMode {
-        REPEATALL,
-        REPEATONE,
-        REPEATOFF,
-        SHUFFLEOFF,
-        SHUFFLEALL
     }
 
 }

@@ -14,13 +14,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -30,6 +29,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import order.android.com.Bop.MusicPlayer;
+import order.android.com.Bop.MusicService;
 import order.android.com.Bop.R;
 import order.android.com.Bop.event.MetaChangedEvent;
 import order.android.com.Bop.permission.PermissionCallback;
@@ -39,6 +39,7 @@ import order.android.com.Bop.ui.fragment.SearchFragment;
 import order.android.com.Bop.util.BopUtil;
 import order.android.com.Bop.util.Constants;
 import order.android.com.Bop.util.PanelSlideListener;
+import order.android.com.Bop.util.PlayModePreferences;
 import order.android.com.Bop.util.RxBus;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -46,6 +47,10 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
+    public static PlayModePreferences repeatMain;
+    public static PlayModePreferences shuffleMain;
+    public static int repeatState;
+    public static int shuffleState;
     @BindView(R.id.sliding_layout)
     SlidingUpPanelLayout panelLayout;
     @BindView(R.id.nav_view)
@@ -54,7 +59,7 @@ public class MainActivity extends BaseActivity {
     DrawerLayout mDrawerLayout;
     SeekBar seekBar;
     int x = 0;
-
+    public static PlayMode mPlayMode;
     private PanelSlideListener.Status mStatus = PanelSlideListener.Status.COLLAPSED;
     private String action;
     private Map<String, Runnable> navigationMap = new HashMap<String, Runnable>();
@@ -195,7 +200,39 @@ public class MainActivity extends BaseActivity {
                 }
             }, 350);
         }
+        repeatMain = new PlayModePreferences(this);
+        shuffleMain = new PlayModePreferences(this);
         subscribeMetaChangedEvent();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        repeatState = repeatMain.getItemIndexrepeat();
+        shuffleState = shuffleMain.getItemIndexshuffle();
+        if (repeatState == 0) {
+            mPlayMode = PlayMode.REPEATOFF;
+            MusicPlayer.setRepeatMode(MusicService.REPEAT_NONE);
+        } else if (repeatState == 1) {
+            mPlayMode = PlayMode.REPEATONE;
+            MusicPlayer.setRepeatMode(MusicService.REPEAT_CURRENT);
+        } else if (repeatState == 2) {
+            mPlayMode = PlayMode.REPEATALL;
+            MusicPlayer.setRepeatMode(MusicService.REPEAT_ALL);
+        }
+        if (shuffleState == 0) {
+            mPlayMode = PlayMode.SHUFFLEOFF;
+            MusicPlayer.setShuffleMode(MusicService.SHUFFLE_NONE);
+        } else if (shuffleState == 1) {
+            mPlayMode = PlayMode.SHUFFLEALL;
+            MusicPlayer.setShuffleMode(MusicService.SHUFFLE_AUTO);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     @Override
@@ -397,6 +434,14 @@ public class MainActivity extends BaseActivity {
     public void onRequestPermissionsResult(
             int requestCode, String[] permissions, int[] grantResults) {
         PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    public enum PlayMode {
+        REPEATALL,
+        REPEATONE,
+        REPEATOFF,
+        SHUFFLEOFF,
+        SHUFFLEALL
     }
 
 }
