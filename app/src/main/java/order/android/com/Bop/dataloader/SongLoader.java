@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.List;
 import order.android.com.Bop.mvp.model.Song;
-import order.android.com.Bop.provider.SongPlayCount;
 import order.android.com.Bop.util.PreferencesUtility;
 import rx.Observable;
 import rx.Subscriber;
@@ -63,7 +62,6 @@ public class SongLoader {
                         String path = cursor.getString(8);
 
                         Song song = new Song(id, albumId, artistId, title, artist, album, duration, trackNumber, path);
-                        song.setPlayCountScore(scoreCursor.getFloat(scoreCursor.getColumnIndex(SongPlayCount.SongPlayCountColumns.PLAYCOUNTSCORE)));
                         arrayList.add(song);
                     }
                     while (cursor.moveToNext() && scoreCursor.moveToNext());

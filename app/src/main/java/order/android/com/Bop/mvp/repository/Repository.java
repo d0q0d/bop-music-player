@@ -1,6 +1,9 @@
 package order.android.com.Bop.mvp.repository;
 
+import java.io.File;
 import java.util.List;
+
+import order.android.com.Bop.api.model.ArtistInfo;
 import order.android.com.Bop.mvp.model.Album;
 import order.android.com.Bop.mvp.model.Artist;
 import order.android.com.Bop.mvp.model.Playlist;
@@ -9,6 +12,11 @@ import rx.Observable;
 
 
 public interface Repository {
+
+    Observable<ArtistInfo> getArtistInfo(String artist);
+
+    Observable<File> downloadLrcFile(String title, String artist, long duration);
+
 
     //form local
 

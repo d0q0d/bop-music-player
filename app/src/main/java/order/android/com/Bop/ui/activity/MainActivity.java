@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,8 +31,9 @@ import order.android.com.Bop.MusicPlayer;
 import order.android.com.Bop.MusicService;
 import order.android.com.Bop.R;
 import order.android.com.Bop.event.MetaChangedEvent;
-import order.android.com.Bop.permission.PermissionCallback;
-import order.android.com.Bop.permission.PermissionManager;
+import order.android.com.Bop.util.NavigationUtil;
+import order.android.com.Bop.util.permission.PermissionCallback;
+import order.android.com.Bop.util.permission.PermissionManager;
 import order.android.com.Bop.ui.fragment.MainFragment;
 import order.android.com.Bop.ui.fragment.SearchFragment;
 import order.android.com.Bop.util.BopUtil;
@@ -134,6 +134,11 @@ public class MainActivity extends BaseActivity {
             navigationView.getMenu().findItem(R.id.artists).setChecked(false);
             x = 0;
             MainFragment.viewPager.setCurrentItem(x);
+        }
+    };
+ private Runnable navigateEqualizer = new Runnable() {
+        public void run() {
+            NavigationUtil.navigateToEqualizer(MainActivity.this);
         }
     };
 
@@ -257,11 +262,11 @@ public class MainActivity extends BaseActivity {
 
     private void checkPermissionAndThenLoad() {
         //check for permission
-        if (PermissionManager.checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE) && (PermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))) {
+        if (PermissionManager.checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ) {
             loadEverything();
         } else {
             if (PermissionManager.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Snackbar.make(panelLayout, "Music will need to read and write external storage to display songs on your device.",
+                Snackbar.make(panelLayout, "Bop will need to read and write external storage to display songs on your device.",
                         Snackbar.LENGTH_INDEFINITE)
                         .setAction(android.R.string.ok, new View.OnClickListener() {
                             @Override
@@ -270,7 +275,7 @@ public class MainActivity extends BaseActivity {
                             }
                         }).show();
             } else {
-                PermissionManager.askForPermission(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, permissionReadstorageCallback);
+                PermissionManager.askForPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE, permissionReadstorageCallback);
             }
         }
     }
@@ -309,6 +314,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.songs:
                 runnable = navigateSong;
+                break;
+                case R.id.equalizer:
+                runnable = navigateEqualizer;
                 break;
             case R.id.feedback:
                 runnable = navigateFeedback;

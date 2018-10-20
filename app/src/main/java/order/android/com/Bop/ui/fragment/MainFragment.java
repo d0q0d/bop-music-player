@@ -22,8 +22,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import order.android.com.Bop.R;
-import order.android.com.Bop.util.Constants;
 import order.android.com.Bop.util.BopUtil;
+import order.android.com.Bop.util.Constants;
 import order.android.com.Bop.util.PreferencesUtility;
 
 /**
@@ -32,6 +32,7 @@ import order.android.com.Bop.util.PreferencesUtility;
 public class MainFragment extends Fragment {
 
     public static ViewPager viewPager;
+    public static ActionBar ab;
     @BindView(R.id.appbar)
     AppBarLayout appBarLayout;
     @BindView(R.id.toolbar_tabs)
@@ -82,11 +83,34 @@ public class MainFragment extends Fragment {
 
         ButterKnife.bind(this, view);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        final ActionBar ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_chevron_right);
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle(R.string.library);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == 0) {
+                    ab.setTitle("Artists");
+                } else if (position == 1) {
+                    ab.setTitle("Albums");
+                } else if (position == 2) {
+                    ab.setTitle("Songs");
+                } else if (position == 3) {
+                    ab.setTitle("Playlists");
+                }
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         tabLayout.setupWithViewPager(viewPager);
         if (viewPager != null) {
             setupViewPager(viewPager);
@@ -141,6 +165,7 @@ public class MainFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
+
             return mFragments.get(position);
         }
 
@@ -151,6 +176,7 @@ public class MainFragment extends Fragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
+
             if (this.isTitle)
                 return mFragmentTitles.get(position);
             else

@@ -2,7 +2,6 @@ package order.android.com.Bop;
 
 import android.Manifest;
 import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -18,8 +17,9 @@ import order.android.com.Bop.event.MediaUpdateEvent;
 import order.android.com.Bop.injector.component.ApplicationComponent;
 import order.android.com.Bop.injector.component.DaggerApplicationComponent;
 import order.android.com.Bop.injector.module.ApplicationModule;
+import order.android.com.Bop.injector.module.NetworkModule;
 import order.android.com.Bop.mvp.model.Song;
-import order.android.com.Bop.permission.PermissionManager;
+import order.android.com.Bop.util.permission.PermissionManager;
 import order.android.com.Bop.util.BopUtil;
 import order.android.com.Bop.util.RxBus;
 import rx.functions.Action1;
@@ -41,7 +41,8 @@ public class BopApp extends Application {
 
     private void setupInjector() {
         mApplicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this)).build();
+                .applicationModule(new ApplicationModule(this))
+                .networkModule(new NetworkModule(this)).build();
     }
 
     private void initImageLoader() {

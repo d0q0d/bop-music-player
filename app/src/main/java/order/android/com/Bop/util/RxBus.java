@@ -11,6 +11,8 @@ import rx.subjects.PublishSubject;
 import rx.subjects.SerializedSubject;
 import rx.subscriptions.CompositeSubscription;
 
+
+
 public class RxBus {
     private static volatile RxBus mInstance;
     private SerializedSubject<Object, Object> mSubject;
@@ -32,6 +34,8 @@ public class RxBus {
     }
 
     /**
+     * 发送事件
+     *
      * @param o
      */
     public void post(Object o) {
@@ -39,6 +43,8 @@ public class RxBus {
     }
 
     /**
+     * 返回指定类型的Observable实例
+     *
      * @param type
      * @param <T>
      * @return
@@ -48,6 +54,8 @@ public class RxBus {
     }
 
     /**
+     * 是否已有观察者订阅
+     *
      * @return
      */
     public boolean hasObservers() {
@@ -55,6 +63,8 @@ public class RxBus {
     }
 
     /**
+     * 一个默认的订阅方法
+     *
      * @param type
      * @param next
      * @param error
@@ -69,7 +79,7 @@ public class RxBus {
     }
 
     /**
-     * subscription
+     * 保存订阅后的subscription
      * @param o
      * @param subscription
      */
@@ -88,6 +98,7 @@ public class RxBus {
     }
 
     /**
+     * 取消订阅
      * @param o
      */
     public void unSubscribe(Object o) {

@@ -29,12 +29,5 @@ public class ApplicationModule {
         return mBopApp;
     }
 
-    @Provides
-    @PerApplication
-    Repository provideRepository() {
-        return new RepositoryImpl(mBopApp);
-    }
-
-
 
 }

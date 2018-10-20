@@ -43,10 +43,6 @@ public class SearchHistory {
         onCreate(db);
     }
 
-    /**
-     * 添加搜索记录,并删除溢出记录
-     * @param searchString
-     */
     public void addSearchString(final String searchString) {
         if (searchString == null) {
             return;
@@ -99,11 +95,6 @@ public class SearchHistory {
         }
     }
 
-    /**
-     * 获取最近搜索的n条记录
-     * @param limit
-     * @return
-     */
     public Cursor queryRecentSearches(final String limit) {
         final SQLiteDatabase database = mMusicDatabase.getReadableDatabase();
         return database.query(SearchHistoryColumns.NAME,

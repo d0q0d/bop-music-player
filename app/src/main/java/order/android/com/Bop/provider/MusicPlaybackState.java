@@ -83,11 +83,6 @@ public class MusicPlaybackState {
         onCreate(db);
     }
 
-    /**
-     * 将输入数据保存到两个表中(旧数据被清除)
-     * @param queue
-     * @param history
-     */
     public synchronized void saveState(final ArrayList<MusicPlaybackTrack> queue,
                                        LinkedList<Integer> history) {
         final SQLiteDatabase database = mMusicDatabase.getWritableDatabase();
@@ -145,10 +140,6 @@ public class MusicPlaybackState {
         }
     }
 
-    /**
-     * 获取playbackqueue表中的数据
-     * @return
-     */
     public ArrayList<MusicPlaybackTrack> getQueue() {
         ArrayList<MusicPlaybackTrack> results = new ArrayList<>();
 
@@ -175,11 +166,6 @@ public class MusicPlaybackState {
         }
     }
 
-    /**
-     * 获取playbackhistory表中的数据
-     * @param playlistSize
-     * @return
-     */
     public LinkedList<Integer> getHistory(final int playlistSize) {
         LinkedList<Integer> results = new LinkedList<>();
 

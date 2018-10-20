@@ -1,4 +1,4 @@
-package order.android.com.Bop.permission;
+package order.android.com.Bop.util.permission;
 
 
 public interface PermissionCallback {

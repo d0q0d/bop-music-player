@@ -56,36 +56,44 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="48dp"
             app:srcCompat="@drawable/ic_playlist_play" />
-
+      <!--  <ImageView
+            android:id="@+id/lyrics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="88dp"
+            app:srcCompat="@drawable/ic_format_indent_increase_black_18dp" />
+-->
     </RelativeLayout>
 
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cover_cl2"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="76dp"
-            app:cardElevation="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/guide1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_gravity="center"
-            app:cardCornerRadius="8dp"
-           >
+    <android.support.v7.widget.CardView
+        android:id="@+id/cover_cl2"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="76dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guide1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center"
+        app:cardCornerRadius="8dp"
+        >
 
-            <ImageView
-                android:id="@+id/cover_imageView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:scaleType="centerCrop"
-                android:src="@drawable/defult_album_art" />
-        </android.support.v7.widget.CardView>
+        <order.android.com.Bop.util.ForegroundImageView
+            android:id="@+id/cover_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/defult_album_art" />
+    </android.support.v7.widget.CardView>
 
 
 
@@ -427,4 +435,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <order.android.com.Bop.util.LyricView
+        android:id="@+id/lyricview"
+        android:layout_width="match_parent"
+        android:layout_height="0.02dp"
+        android:visibility="invisible"
+        android:background="@color/white2"
+        app:layout_constraintBottom_toTopOf="@+id/play_cl6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Text_cl4" />
 </android.support.constraint.ConstraintLayout>

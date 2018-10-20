@@ -28,7 +28,6 @@ public class GetSongs extends UseCase<GetSongs.RequestValues,GetSongs.ResponseVa
                 throw new RuntimeException("wrong action type");
         }
     }
-
     public static final class RequestValues implements UseCase.RequestValues {
 
         private final String action;

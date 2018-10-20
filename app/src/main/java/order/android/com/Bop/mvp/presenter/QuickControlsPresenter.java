@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,15 +14,23 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
+import java.io.File;
+
 import order.android.com.Bop.MusicPlayer;
 import order.android.com.Bop.R;
 import order.android.com.Bop.mvp.contract.QuickControlsContract;
+import order.android.com.Bop.mvp.usecase.GetLyric;
 import order.android.com.Bop.util.BopUtil;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 
 public class QuickControlsPresenter implements QuickControlsContract.Presenter ,QuickControlsContract.View{
 
+    private GetLyric mGetLyric;
     private CompositeSubscription mCompositeSubscription;
     private QuickControlsContract.View mView;
     Context context;
@@ -30,6 +39,10 @@ public class QuickControlsPresenter implements QuickControlsContract.Presenter ,
     TextView textView2;
 
     private boolean mDuetoplaypause = false;
+
+    public QuickControlsPresenter(GetLyric getLyric) {
+        this.mGetLyric = getLyric;
+    }
 
     @Override
     public void attachView(QuickControlsContract.View view) {
@@ -73,6 +86,41 @@ public class QuickControlsPresenter implements QuickControlsContract.Presenter ,
     @Override
     public void onPreviousClick() {
         MusicPlayer.previous(mView.getContext(), true);
+    }
+
+    @Override
+    public void loadLyric() {
+        mCompositeSubscription.clear();
+        String title = MusicPlayer.getTrackName();
+        String artist = MusicPlayer.getArtistName();
+        long duration = MusicPlayer.duration();
+        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(artist)) {
+            return;
+        }
+        Subscription subscription = mGetLyric.execute(new GetLyric.RequestValues(title, artist, duration))
+                .getLyricFile()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<File>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showLyric(null);
+                    }
+
+                    @Override
+                    public void onNext(File file) {
+                        if (file == null) {
+                            mView.showLyric(null);
+                        } else {
+                            mView.showLyric(file);
+                        }
+                    }
+                });
+        mCompositeSubscription.add(subscription);
     }
 
     @Override
@@ -177,6 +225,16 @@ public class QuickControlsPresenter implements QuickControlsContract.Presenter ,
     @Override
     public boolean getPlayPauseStatus() {
         return false;
+    }
+
+    @Override
+    public void setPalette(Palette palette) {
+
+    }
+
+    @Override
+    public void showLyric(File file) {
+
     }
 
     @Override

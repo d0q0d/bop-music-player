@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import order.android.com.Bop.BopApp;
 import order.android.com.Bop.R;
 import order.android.com.Bop.event.MetaChangedEvent;
+
 import order.android.com.Bop.injector.component.AlbumSongsComponent;
 import order.android.com.Bop.injector.component.ApplicationComponent;
 import order.android.com.Bop.injector.component.DaggerAlbumSongsComponent;

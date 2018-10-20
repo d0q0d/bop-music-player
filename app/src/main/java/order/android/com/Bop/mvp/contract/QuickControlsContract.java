@@ -3,8 +3,11 @@ package order.android.com.Bop.mvp.contract;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.support.v7.graphics.Palette;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.File;
 
 import order.android.com.Bop.mvp.presenter.BasePresenter;
 import order.android.com.Bop.mvp.view.BaseView;
@@ -34,6 +37,10 @@ public interface QuickControlsContract {
 
         boolean getPlayPauseStatus();
 
+        void setPalette(Palette palette);
+
+        void showLyric(File file);
+
         void startUpdateProgress();
 
         void setProgressMax(int max);
@@ -45,6 +52,8 @@ public interface QuickControlsContract {
         void onPlayPauseClick();
 
         void onPreviousClick();
+
+        void loadLyric();
 
         void onNextClick();
 

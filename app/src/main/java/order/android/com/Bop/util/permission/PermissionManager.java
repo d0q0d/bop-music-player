@@ -1,4 +1,4 @@
-package order.android.com.Bop.permission;
+package order.android.com.Bop.util.permission;
 
 import android.Manifest;
 import android.app.Activity;

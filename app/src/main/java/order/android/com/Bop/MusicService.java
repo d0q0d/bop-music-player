@@ -19,7 +19,6 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
@@ -59,9 +58,8 @@ import java.util.TimerTask;
 import java.util.TreeSet;
 
 import order.android.com.Bop.mvp.model.MusicPlaybackTrack;
-import order.android.com.Bop.permission.PermissionManager;
+import order.android.com.Bop.util.permission.PermissionManager;
 import order.android.com.Bop.provider.MusicPlaybackState;
-import order.android.com.Bop.provider.SongPlayCount;
 import order.android.com.Bop.util.BopUtil;
 import order.android.com.Bop.util.MediaButtonIntentReceiver;
 import order.android.com.Bop.util.NavigationUtil;
@@ -200,7 +198,6 @@ public class MusicService extends Service {
     private BroadcastReceiver mUnmountReceiver = null; //监听外部存储
     private MusicPlaybackState mPlaybackStateStore;
     private boolean mShowAlbumArtOnLockscreen;
-    private SongPlayCount mSongPlayCount;
     private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() { //监听各种action
 
         @Override
@@ -254,7 +251,6 @@ public class MusicService extends Service {
 
         // gets a pointer to the playback state store
         mPlaybackStateStore = MusicPlaybackState.getInstance(this);
-        mSongPlayCount = SongPlayCount.getInstance(this);
 
 
         mHandlerThread = new HandlerThread("MusicPlayerHandler",
@@ -1071,11 +1067,6 @@ public class MusicService extends Service {
         }
         return false;
     }
-
-    private void bumpSongCount() {
-        mSongPlayCount.bumpSongCount(getPreviousAudioId());
-    }
-
     /**
      * 当service即将关闭时,发送PLAYSTATE_CHANGED
      * 当播放队列变动时,发送QUEUE_CHANGED
@@ -2301,7 +2292,6 @@ public class MusicService extends Service {
                             service.mCursor = null;
                         }
                         service.updateCursor(service.mPlaylist.get(service.mPlayPos).mId);
-                        service.bumpSongCount(); //更新歌曲的播放次数
                         service.notifyChange(META_CHANGED);
                         service.updateNotification();
                         break;

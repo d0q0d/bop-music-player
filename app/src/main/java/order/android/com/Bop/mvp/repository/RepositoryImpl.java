@@ -2,9 +2,15 @@ package order.android.com.Bop.mvp.repository;
 
 import android.content.Context;
 
+import java.io.File;
 import java.util.List;
 
 import order.android.com.Bop.R;
+import order.android.com.Bop.api.KuGouApiService;
+import order.android.com.Bop.api.LastFmApiService;
+import order.android.com.Bop.api.model.ArtistInfo;
+import order.android.com.Bop.api.model.KuGouRawLyric;
+import order.android.com.Bop.api.model.KuGouSearchLyricResult;
 import order.android.com.Bop.dataloader.AlbumLoader;
 import order.android.com.Bop.dataloader.AlbumSongLoader;
 import order.android.com.Bop.dataloader.ArtistAlbumLoader;
@@ -15,23 +21,61 @@ import order.android.com.Bop.dataloader.PlaylistLoader;
 import order.android.com.Bop.dataloader.PlaylistSongLoader;
 import order.android.com.Bop.dataloader.QueueLoader;
 import order.android.com.Bop.dataloader.SongLoader;
-import order.android.com.Bop.dataloader.TopTracksLoader;
 import order.android.com.Bop.mvp.model.Album;
 import order.android.com.Bop.mvp.model.Artist;
 import order.android.com.Bop.mvp.model.Playlist;
 import order.android.com.Bop.mvp.model.Song;
+import order.android.com.Bop.util.LyricUtil;
+import retrofit2.Retrofit;
 import rx.Observable;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 
 public class RepositoryImpl implements Repository {
 
+    private KuGouApiService mKuGouApiService;
+    private LastFmApiService mLastFmApiService;
     private Context mContext;
 
-    public RepositoryImpl(Context context) {
+    public RepositoryImpl(Context context, Retrofit kugou, Retrofit lastfm) {
         mContext = context;
+        mKuGouApiService = kugou.create(KuGouApiService.class);
+        mLastFmApiService = lastfm.create(LastFmApiService.class);
+    }
+    @Override
+    public Observable<ArtistInfo> getArtistInfo(String artist) {
+        return mLastFmApiService.getArtistInfo(artist);
     }
 
+    @Override
+    public Observable<File> downloadLrcFile(final String title, final String artist, final long duration) {
+        return mKuGouApiService.searchLyric(title, String.valueOf(duration))
+                .subscribeOn(Schedulers.io())
+                .flatMap(new Func1<KuGouSearchLyricResult, Observable<KuGouRawLyric>>() {
+                    @Override
+                    public Observable<KuGouRawLyric> call(KuGouSearchLyricResult kuGouSearchLyricResult) {
+                        if (kuGouSearchLyricResult.status == 200
+                                && kuGouSearchLyricResult.candidates != null
+                                && kuGouSearchLyricResult.candidates.size() != 0) {
+                            KuGouSearchLyricResult.Candidates candidates = kuGouSearchLyricResult.candidates.get(0);
+                            return mKuGouApiService.getRawLyric(candidates.id, candidates.accesskey);
+                        } else {
+                            return Observable.just(null);
+                        }
+                    }
+                })
+                .map(new Func1<KuGouRawLyric, File>() {
+                    @Override
+                    public File call(KuGouRawLyric kuGouRawLyric) {
+                        if (kuGouRawLyric == null) {
+                            return null;
+                        }
+                        String rawLyric = LyricUtil.decryptBASE64(kuGouRawLyric.content);
+                        return LyricUtil.writeLrcToLoc(title, artist, rawLyric);
+                    }
+                });
+    }
     @Override
     public Observable<List<Album>> getAllAlbums() {
         return AlbumLoader.getAllAlbums(mContext);

@@ -4,6 +4,7 @@ package order.android.com.Bop.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,7 +34,9 @@ import order.android.com.Bop.mvp.contract.ArtistContract;
 import order.android.com.Bop.mvp.model.Artist;
 import order.android.com.Bop.ui.adapter.ArtistAdapter;
 import order.android.com.Bop.util.Constants;
+import order.android.com.Bop.util.PreferencesUtility;
 import order.android.com.Bop.util.RxBus;
+import order.android.com.Bop.util.SortOrder;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -51,7 +54,7 @@ public class ArtistFragment extends Fragment implements ArtistContract.View {
     private ArtistAdapter mAdapter;
     private RecyclerView.ItemDecoration itemDecoration;
     private String action;
-
+    private PreferencesUtility mPreferences;
     public static ArtistFragment newInstance(String action) {
 
         Bundle args = new Bundle();
@@ -98,8 +101,11 @@ public class ArtistFragment extends Fragment implements ArtistContract.View {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        mPreferences = PreferencesUtility.getInstance(getActivity());
+        mPreferences.setAlbumSortOrder(SortOrder.ArtistSortOrder.ARTIST_A_Z);
         recyclerView.setAdapter(mAdapter);
+        setItemDecoration();
         recyclerView.setHasFixedSize(true);
         mPresenter.loadArtists(action);
         subscribeMediaUpdateEvent();
@@ -111,7 +117,13 @@ public class ArtistFragment extends Fragment implements ArtistContract.View {
             subscribeMediaUpdateEvent();
         }
     }
+    private void setItemDecoration() {
 
+        int spacingInPixels = getActivity().getResources().getDimensionPixelSize(R.dimen.spacing_card_album_grid);
+        itemDecoration = new AlbumFragment.SpacesItemDecoration(spacingInPixels);
+
+        recyclerView.addItemDecoration(itemDecoration);
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

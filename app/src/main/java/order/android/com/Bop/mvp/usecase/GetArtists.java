@@ -25,7 +25,6 @@ public class GetArtists extends UseCase<GetArtists.RequestValues,GetArtists.Resp
         }
     }
 
-
     public static final class RequestValues implements UseCase.RequestValues{
 
         private String action;

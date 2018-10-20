@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
+    <color name="white2">#FAFAFA</color>
     <color name="black">#000</color>
     <color name="red">#ff0000</color>
     <color name="pink">#C2185B</color>
@@ -14,6 +15,6 @@
     <color name="background_floating_material_dark">@color/material_grey_600</color>
     <color name="album_default_palette_color_light">#ffe8e8e8</color>
     <color name="colorDividerBlack">#1f000000</color>
-
+    <color name="color1">#3c30db</color>
 
 </resources>

@@ -2,6 +2,7 @@ package order.android.com.Bop.util;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Pair;
 import android.view.View;
+import android.widget.Toast;
 
 import order.android.com.Bop.R;
 import order.android.com.Bop.ui.activity.MainActivity;
@@ -59,5 +61,12 @@ public class NavigationUtil {
         intent.setAction(Constants.NAVIGATE_LIBRARY);
         return intent;
     }
-
+    public static void navigateToEqualizer(Activity context) {
+        try {
+            // The google MusicFX apps need to be started using startActivityForResult
+            context.startActivityForResult(BopUtil.createEffectsIntent(), 666);
+        } catch (final ActivityNotFoundException notFound) {
+            Toast.makeText(context, "Equalizer not found", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

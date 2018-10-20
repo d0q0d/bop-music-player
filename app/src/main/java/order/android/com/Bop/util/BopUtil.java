@@ -50,7 +50,6 @@ import order.android.com.Bop.event.PlaylistUpdateEvent;
 import order.android.com.Bop.event.RecentlyPlayEvent;
 import order.android.com.Bop.mvp.model.Playlist;
 import order.android.com.Bop.mvp.model.Song;
-import order.android.com.Bop.provider.SongPlayCount;
 import order.android.com.Bop.ui.dialogs.CreatePlaylistDialog;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -160,7 +159,6 @@ public class BopUtil {
                 final long id = c.getLong(0);
                 MusicPlayer.removeTrack(id);
                 // Remove the track from the play count
-                SongPlayCount.getInstance(context).removeItem(id);
                 // Remove any items in the recents database
                 c.moveToNext();
             }

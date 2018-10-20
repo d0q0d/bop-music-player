@@ -5,12 +5,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.graphics.Palette;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +26,8 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -43,12 +47,19 @@ import order.android.com.Bop.injector.module.QuickControlsModule;
 import order.android.com.Bop.mvp.contract.QuickControlsContract;
 import order.android.com.Bop.ui.dialogs.PlayqueueDialog;
 import order.android.com.Bop.ui.dialogs.ShuffleRepeat;
+import order.android.com.Bop.util.ATEUtil;
 import order.android.com.Bop.util.BopUtil;
+import order.android.com.Bop.util.ColorUtil;
+import order.android.com.Bop.util.DensityUtil;
+import order.android.com.Bop.util.ForegroundImageView;
+import order.android.com.Bop.util.LyricView;
 import order.android.com.Bop.util.MusicProgressViewUpdateHelper;
 import order.android.com.Bop.util.NavigationUtil;
+import order.android.com.Bop.util.PaletteColorChangeListener;
 import order.android.com.Bop.util.PanelSlideListener;
 import order.android.com.Bop.util.PlayModePreferences;
 import order.android.com.Bop.util.RxBus;
+import order.android.com.Bop.util.ScrimUtil;
 import order.android.com.Bop.util.SimpleOnSeekbarChangeListener;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -57,6 +68,8 @@ import rx.schedulers.Schedulers;
 
 public class QuickControlsFragment extends Fragment implements QuickControlsContract.View, MusicProgressViewUpdateHelper.Callback {
 
+
+    private static PaletteColorChangeListener sListener;
     @BindView(R.id.main_cl1)
     public View topContainer;
     protected PlayModePreferences sleepTimer;
@@ -69,7 +82,7 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
     @BindView(R.id.artistAlbum)
     TextView mArtist;
     @BindView(R.id.cover_imageView)
-    ImageView mAlbumArt;
+    ForegroundImageView mAlbumArt;
     @BindView(R.id.rewind)
     ImageButton previous;
     @BindView(R.id.forward)
@@ -92,6 +105,9 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
     AudioManager audioManager = null;
     @BindView(R.id.arrow_up_black)
     ImageView imageView123;
+    @BindView(R.id.lyricview)
+    LyricView mLyricView;
+    private int blackWhiteColor;
     private SlidingUpPanelLayout mSlidingUpPanelLayout;
     private boolean mIsFavorite = false;
     private MusicProgressViewUpdateHelper progressViewUpdateHelper;
@@ -99,6 +115,24 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
     private PlayqueueDialog bottomDialogFragment;
     private ShuffleRepeat shuffleRepeatFragment;
     private Palette.Swatch mSwatch;
+    private Runnable mUpdateProgress = new Runnable() {
+
+        @Override
+        public void run() {
+
+            long position = MusicPlayer.position();
+            mSeekBar.setProgress((int) position);
+            mLyricView.setCurrentTimeMillis(position);
+            if (MusicPlayer.isPlaying()) {
+                mSeekBar.postDelayed(mUpdateProgress, 50);
+            } else mSeekBar.removeCallbacks(this);
+
+        }
+    };
+
+    public static void setPaletteColorChangeListener(PaletteColorChangeListener paletteColorChangeListener) {
+        sListener = paletteColorChangeListener;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,6 +174,22 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
         sleepTimer = new PlayModePreferences(getActivity());
         setUpProgressSlider();
         setUpPopupMenu(popupMenu);
+
+
+        mLyricView.setLineSpace(15.0f);
+        mLyricView.setTextSize(17.0f);
+        mLyricView.setPlayable(false);
+        mLyricView.setDefaultColor(getResources().getColor(R.color.black));
+        mLyricView.setTranslationY(DensityUtil.getScreenWidth(getActivity()) + DensityUtil.dip2px(getActivity(), 120));
+        mLyricView.setOnPlayerClickListener(new LyricView.OnPlayerClickListener() {
+            @Override
+            public void onPlayerClicked(long progress, String content) {
+                MusicPlayer.seek((long) progress);
+                if (!MusicPlayer.isPlaying()) {
+                    mPresenter.onPlayPauseClick();
+                }
+            }
+        });
         mSeekBar.setSecondaryProgress(mSeekBar.getMax());
 
         mPlayPauseView.setDrawableColor(getResources().getColor(R.color.black));
@@ -154,7 +204,6 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
         subscribeFavourateSongEvent();
         subscribeMetaChangedEvent();
     }
-
 
     private void setUpPopupMenu(final ImageView popupMenu) {
         popupMenu.setOnClickListener(new View.OnClickListener() {
@@ -180,12 +229,21 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
         });
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
         RxBus.getInstance().unSubscribe(this);
+    }
+
+
+    @Override
+    public void showLyric(File file) {
+        if (file == null) {
+            mLyricView.reset("No lyrics");
+        } else {
+            mLyricView.setLyricFile(file, "UTF-8");
+        }
     }
 
     private void initControls(SeekBar seekBar, final int stream) {
@@ -241,8 +299,46 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
     }
 
     @Override
-    public void startUpdateProgress() {
+    public void setPalette(Palette palette) {
+        mSwatch = ColorUtil.getMostPopulousSwatch(palette);
+        int paletteColor;
+        if (mSwatch != null) {
+            paletteColor = mSwatch.getRgb();
+        } else {
+            mSwatch = palette.getMutedSwatch() == null ? palette.getVibrantSwatch() : palette.getMutedSwatch();
+            if (mSwatch != null) {
+                paletteColor = mSwatch.getRgb();
+            } else {
+                paletteColor = ATEUtil.getThemeAlbumDefaultPaletteColor(getContext());
+            }
 
+        }
+        blackWhiteColor = ColorUtil.getBlackWhiteColor(paletteColor);
+        topContainer.setBackgroundColor(paletteColor);
+        if (bottomDialogFragment != null && mSwatch != null) {
+            bottomDialogFragment.setPaletteSwatch(mSwatch);
+        }
+        mLyricView.setHighLightTextColor(blackWhiteColor);
+        mLyricView.setDefaultColor(blackWhiteColor);
+        mLyricView.setTouchable(false);
+        mLyricView.setHintColor(blackWhiteColor);
+        //set albumart foreground
+        if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            mAlbumArt.setForeground(
+                    ScrimUtil.makeCubicGradientScrimDrawable(
+                            paletteColor, //颜色
+                            8, //渐变层数
+                            Gravity.CENTER_HORIZONTAL)); //起始方向
+
+        }
+        if (sListener != null) {
+            sListener.onPaletteColorChange(paletteColor, blackWhiteColor);
+        }
+    }
+
+    @Override
+    public void startUpdateProgress() {
+        mSeekBar.postDelayed(mUpdateProgress, 10);
     }
 
     @Override
@@ -410,6 +506,7 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
                     @Override
                     public void call(MetaChangedEvent event) {
                         mPresenter.updateNowPlayingCard();
+                        mPresenter.loadLyric();
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -422,13 +519,23 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
 
     private void setUpProgressSlider() {
 
-        mSeekBar.setOnSeekBarChangeListener(new SimpleOnSeekbarChangeListener() {
+        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
                     MusicPlayer.seek(progress);
                     onUpdateProgressViews((int) MusicPlayer.position(), (int) MusicPlayer.duration());
                 }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mSeekBar.postDelayed(mUpdateProgress, 10);
             }
         });
     }
