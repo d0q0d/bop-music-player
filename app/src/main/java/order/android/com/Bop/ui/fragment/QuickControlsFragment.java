@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -45,6 +46,7 @@ import order.android.com.Bop.injector.component.QuickControlsComponent;
 import order.android.com.Bop.injector.module.ActivityModule;
 import order.android.com.Bop.injector.module.QuickControlsModule;
 import order.android.com.Bop.mvp.contract.QuickControlsContract;
+import order.android.com.Bop.ui.activity.MainActivity;
 import order.android.com.Bop.ui.dialogs.PlayqueueDialog;
 import order.android.com.Bop.ui.dialogs.ShuffleRepeat;
 import order.android.com.Bop.util.ATEUtil;
@@ -60,7 +62,6 @@ import order.android.com.Bop.util.PanelSlideListener;
 import order.android.com.Bop.util.PlayModePreferences;
 import order.android.com.Bop.util.RxBus;
 import order.android.com.Bop.util.ScrimUtil;
-import order.android.com.Bop.util.SimpleOnSeekbarChangeListener;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -215,7 +216,36 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.sleep_timer: {
-                                new order.android.com.Bop.ui.dialogs.SleepTimerDialog().show(getFragmentManager(), "SET_SLEEP_TIMER");
+
+                                if (MainActivity.r) {
+                                    new order.android.com.Bop.ui.dialogs.SleepTimerDialog().show(getFragmentManager(), "SET_SLEEP_TIMER");
+
+                                } else {
+                                    new MaterialDialog.Builder(getActivity())
+                                            .title("Bop Pro feature")
+                                            .icon(getResources().getDrawable(R.drawable.bazar))
+                                            .content("Unlocks extra features, such as the lyrics, folder view, equalizer and the sleep timer")
+                                            .positiveText("Buy or restore")
+                                            .negativeText(R.string.cancel)
+                                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    if (((MainActivity)getActivity()).isNetworkConnected()) {
+                                                        ((MainActivity)getActivity()).checkVersion();
+                                                    } else {
+                                                        Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            })
+                                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    dialog.dismiss();
+                                                }
+                                            })
+                                            .show();
+                                }
+
                             }
                             break;
                         }
@@ -240,7 +270,7 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
     @Override
     public void showLyric(File file) {
         if (file == null) {
-            mLyricView.reset("No lyrics");
+            mLyricView.reset("No lyrics or VPN is disconnecting");
         } else {
             mLyricView.setLyricFile(file, "UTF-8");
         }
@@ -523,8 +553,7 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
-                    MusicPlayer.seek(progress);
-                    onUpdateProgressViews((int) MusicPlayer.position(), (int) MusicPlayer.duration());
+                    mSeekBar.removeCallbacks(mUpdateProgress);
                 }
             }
 
@@ -535,6 +564,10 @@ public class QuickControlsFragment extends Fragment implements QuickControlsCont
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                /*MusicPlayer.seek(progress);
+                onUpdateProgressViews((int) MusicPlayer.position(), (int) MusicPlayer.duration());*/
+                MusicPlayer.seek((long) seekBar.getProgress());
+                onUpdateProgressViews((int) MusicPlayer.position(), (int) MusicPlayer.duration());
                 mSeekBar.postDelayed(mUpdateProgress, 10);
             }
         });

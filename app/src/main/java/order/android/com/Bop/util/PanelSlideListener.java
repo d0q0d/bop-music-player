@@ -1,15 +1,12 @@
 package order.android.com.Bop.util;
 
-import android.animation.ArgbEvaluator;
-import android.animation.FloatEvaluator;
-import android.animation.IntEvaluator;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -22,6 +19,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import order.android.com.Bop.MusicPlayer;
 import order.android.com.Bop.R;
 import order.android.com.Bop.event.MetaChangedEvent;
+import order.android.com.Bop.ui.activity.MainActivity;
 import order.android.com.Bop.ui.fragment.QuickControlsFragment;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -121,11 +119,19 @@ private  Runnable runnable=new Runnable() {
                 @Override
                 public void onClick(View v) {
                     if (mStatus == Status.EXPANDED) {
-                        animateToFullscreen();
+                        if (!MainActivity.r)
+                        {
+                            Log.i("onClick", "not pro");
+                        }else {
+                            animateToFullscreen();
+                        }
+
+
                     } else if (mStatus == Status.FULLSCREEN) {
                        /* v.postDelayed(runnable,10);
                        v.postDelayed(runnable2,50);*/
-                       animateToNormal();
+                            animateToNormal();
+
                     } else {
                         mPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                     }
@@ -159,7 +165,7 @@ private  Runnable runnable=new Runnable() {
 
     private void caculateLyricView() {
         lyricLineHeight = DensityUtil.dip2px(mContext, 32);
-        lyricFullHeight = screenHeight + 900;
+        lyricFullHeight = screenHeight + 600;
 
         lyricLineStartTranslationY = screenHeight;
         lyricLineEndTranslationY = lyricLineHeight / 2;

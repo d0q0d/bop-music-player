@@ -6,8 +6,8 @@ android {
         applicationId "com.android.bopapp"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 6
-        versionName "2.4.0"
+        versionCode 7
+        versionName "3.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         renderscriptTargetApi 21
         renderscriptSupportModeEnabled true
@@ -20,8 +20,8 @@ android {
         }
         debug {
             minifyEnabled false
-            applicationIdSuffix ".debug"
-            versionNameSuffix "-debug"
+         /*   applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"*/
         }
 
     }
@@ -41,19 +41,18 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation 'com.github.ceryle:RadioRealButton:v2.1.1'
     implementation 'com.android.support:palette-v7:27.1.1'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.0.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.3.0'
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'io.reactivex:rxjava:1.1.6'
-    implementation 'com.artemzin.rxjava:proguard-rules:1.1.0.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.github.bumptech.glide:glide:3.8.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-    implementation 'com.google.dagger:dagger:2.7'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
+    implementation 'com.google.dagger:dagger:2.0'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.0'
     compileOnly 'org.glassfish:javax.annotation:10.0-b28'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation 'com.github.kabouzeid:SeekArc:1.2-kmod'

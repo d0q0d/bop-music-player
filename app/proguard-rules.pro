@@ -24,50 +24,50 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 #-ignorewarnings
--optimizationpasses 5
--dontusemixedcaseclassnames
--dontskipnonpubliclibraryclasses
--dontskipnonpubliclibraryclassmembers
--dontpreverify
--verbose
--dontshrink
--optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
--keep public class * extends android.app.Activity
--keep public class * extends android.app.Application
--keep public class * extends android.app.Service
--keep public class * extends android.content.BroadcastReceiver
--keep public class * extends android.content.ContentProvider
--keep public class * extends android.app.backup.BackupAgentHelper
--keep public class * extends android.preference.Preference
--keep public class com.android.vending.licensing.ILicensingService
--keep public class org.simpleframework.**{ *; }
--keep class org.simpleframework.xml.**{ *; }
--keep class org.simpleframework.xml.core.**{ *; }
--keep class org.simpleframework.xml.util.**{ *; }
--keepattributes *Annotation*
+-keep class retrofit2.** { *; }
+-keep class order.android.com.Bop.api.model.** { *; }
+-keep class order.android.com.Bop.mvp.model.** { *; }
+-keep class com.android.vending.billing
+-keep class android.support.v4.app.** { *; }
+-keep interface android.support.v4.app.** { *; }
+-keep class android.support.v7.app.** { *; }
+-keep interface android.support.v7.app.** { *; }
+-dontwarn retrofit2.**
+-dontwarn rx.**
+
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
 -keepattributes Signature
+-keepattributes Annotation
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-dontwarn okhttp3.**
+-dontwarn okio.**
 
--keepclasseswithmembernames class * {
-    native <methods>;
+
+-keepattributes Exceptions
+-keepattributes Signature
+-keepattributes *Annotation*
+
+#renderscript
+-keep class android.support.v8.renderscript.** { *; }
+
+#searchview
+-keep class android.support.v7.widget.SearchView { *; }
+
+# RxJava RxAndroid
+-dontwarn sun.misc.**
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+    long producerIndex;
+    long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 
--keepclasseswithmembers class * {
-    public <init>(android.content.Context, android.util.AttributeSet);
-}
 
--keepclasseswithmembers class * {
-    public <init>(android.content.Context, android.util.AttributeSet, int);
-}
 
--keepclassmembers class * extends android.app.Activity {
-   public void *(android.view.View);
-}
-
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
-
--keep class * implements android.os.Parcelable {
-  public static final android.os.Parcelable$Creator *;
-}

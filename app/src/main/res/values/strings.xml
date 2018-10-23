@@ -1,5 +1,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">‌‌Bop</string>
+    <string name="started">GET STARTED</string>
+    <string name="Justenjoy">Just enjoy</string>
+    <string name="welcome">Welcome to Bop</string>
     <string name="Mylibrary">Now Playing</string>
     <string name="playlists">Playlists</string>
     <string name="artists">Artists</string>
@@ -7,7 +10,7 @@
     <string name="songs">Songs</string>
     <string name="feedback">Feedback</string>
     <string name="x_has_been_set_as_ringtone">Set %1$s as your ringtone.</string>
-
+    <string name="welcome_to_bop">a beautiful music player for Android.</string>
     <!--  TODO: Remove or change this placeholder text -->
 
     <string name="error_playing_track">Error Playing track</string>
@@ -22,10 +25,11 @@
     <string name="play_shuffle">Shuffle all</string>
     <string name="play_all">Play all</string>
     <string name="equalizer">Equalizer</string>
+    <string name="folder">Folders</string>
     <string name="durationformatshort" translatable="false"><xliff:g id="format">%2$d:%3$02d</xliff:g></string>
     <string name="durationformatlong" translatable="false"><xliff:g id="format">%1$d:%2$02d:%3$02d</xliff:g></string>
 
-
+    <string name="delete_folder">Delete Folder</string>
     <string name="play_next">Play next</string>
     <string name="add_to_queue">Add to queue</string>
     <string name="add_to_playlist">Add to playlist</string>

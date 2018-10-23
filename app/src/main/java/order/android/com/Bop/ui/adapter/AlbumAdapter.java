@@ -212,7 +212,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemHolder> 
             this.artist = (TextView) view.findViewById(R.id.text_item_subtitle);
             this.albumArt = (ImageView) view.findViewById(R.id.image);
             this.popupMenu = (ImageView) view.findViewById(R.id.popup_menu);
-            this.footer = view.findViewById(R.id.footer);
             view.setOnClickListener(this);
         }
 

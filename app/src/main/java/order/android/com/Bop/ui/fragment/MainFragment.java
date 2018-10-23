@@ -90,6 +90,11 @@ public class MainFragment extends Fragment {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
                 if (position == 0) {
                     ab.setTitle("Artists");
                 } else if (position == 1) {
@@ -99,11 +104,6 @@ public class MainFragment extends Fragment {
                 } else if (position == 3) {
                     ab.setTitle("Playlists");
                 }
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
             }
 
             @Override

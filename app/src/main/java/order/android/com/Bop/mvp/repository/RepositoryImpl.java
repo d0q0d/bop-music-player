@@ -16,6 +16,7 @@ import order.android.com.Bop.dataloader.AlbumSongLoader;
 import order.android.com.Bop.dataloader.ArtistAlbumLoader;
 import order.android.com.Bop.dataloader.ArtistLoader;
 import order.android.com.Bop.dataloader.ArtistSongLoader;
+import order.android.com.Bop.dataloader.FolderLoader;
 import order.android.com.Bop.dataloader.LastAddedLoader;
 import order.android.com.Bop.dataloader.PlaylistLoader;
 import order.android.com.Bop.dataloader.PlaylistSongLoader;
@@ -23,6 +24,7 @@ import order.android.com.Bop.dataloader.QueueLoader;
 import order.android.com.Bop.dataloader.SongLoader;
 import order.android.com.Bop.mvp.model.Album;
 import order.android.com.Bop.mvp.model.Artist;
+import order.android.com.Bop.mvp.model.FolderInfo;
 import order.android.com.Bop.mvp.model.Playlist;
 import order.android.com.Bop.mvp.model.Song;
 import order.android.com.Bop.util.LyricUtil;
@@ -148,9 +150,15 @@ public class RepositoryImpl implements Repository {
 
 
     @Override
+    public Observable<List<FolderInfo>> getFoldersWithSong() {
+        return FolderLoader.getFoldersWithSong(mContext);
+    }
+
+    @Override
     public Observable<List<Song>> getSongsInFolder(String path) {
         return SongLoader.getSongListInFolder(mContext, path);
     }
+
 
     @Override
     public Observable<List<Object>> getSearchResult(String queryString) {

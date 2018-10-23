@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import order.android.com.Bop.mvp.model.Song;
 import order.android.com.Bop.util.Constants;
 import order.android.com.Bop.util.BopUtil;
 
-public class SongsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SongsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter {
 
     public int currentlyPlayingPosition;
     private List<Song> arraylist;
@@ -200,6 +201,16 @@ public class SongsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             this.topPlayScore = arraylist.get(0).getPlayCountScore();
         }
         notifyDataSetChanged();
+    }
+
+    @NonNull
+    @Override
+    public String getSectionName(int position) {
+        if (position==0)
+        {
+            return 1+"";
+        }else
+        return position+"";
     }
 
     public static class Type {

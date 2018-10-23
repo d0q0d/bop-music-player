@@ -6,9 +6,6 @@ import android.content.res.Resources;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
-/**
- * Created by hefuyi on 16/7/30.
- */
 public class DensityUtil {
 
     public static int getScreenHeight(Context context) {

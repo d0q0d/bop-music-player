@@ -5,9 +5,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
 
-/**
- * Created by hefuyi on 2016/11/3.
- */
 
 public interface LastFmApiService {
 

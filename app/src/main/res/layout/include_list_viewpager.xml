@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    android:onClick="onClickPannel"
     sothree:umanoDragView="@+id/quickcontrols_container"
     sothree:umanoOverlay="false"
     sothree:umanoPanelHeight="30dp"

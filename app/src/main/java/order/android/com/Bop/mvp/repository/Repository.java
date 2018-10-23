@@ -6,6 +6,7 @@ import java.util.List;
 import order.android.com.Bop.api.model.ArtistInfo;
 import order.android.com.Bop.mvp.model.Album;
 import order.android.com.Bop.mvp.model.Artist;
+import order.android.com.Bop.mvp.model.FolderInfo;
 import order.android.com.Bop.mvp.model.Playlist;
 import order.android.com.Bop.mvp.model.Song;
 import rx.Observable;
@@ -46,6 +47,8 @@ public interface Repository {
     Observable<List<Song>> getQueueSongs();
 
     Observable<List<Song>> getAllSongs();
+
+    Observable<List<FolderInfo>> getFoldersWithSong();
 
     Observable<List<Song>> searchSongs(String searchString);
 

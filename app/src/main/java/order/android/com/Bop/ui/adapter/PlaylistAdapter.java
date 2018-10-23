@@ -213,7 +213,6 @@ public class PlaylistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(view);
             this.title = (TextView) view.findViewById(R.id.txt1);
             this.songcount = (TextView) view.findViewById(R.id.txt2);
-            this.footer = view.findViewById(R.id.footer);
             this.playlistArt = (ImageView) view.findViewById(R.id.image);
             this.popupMenu = (ImageView) view.findViewById(R.id.popup_menu2);
             view.setOnClickListener(this);

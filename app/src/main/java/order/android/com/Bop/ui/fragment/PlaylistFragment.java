@@ -3,6 +3,7 @@ package order.android.com.Bop.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,7 +52,7 @@ public class PlaylistFragment extends Fragment implements PlaylistContract.View 
     View emptyView;
     @BindView(R.id.playlist_new)
     View linearLayout_PlayLists;
-    LinearLayout linearLayout;
+    ConstraintLayout linearLayout;
     private PlaylistAdapter mAdapter;
     private RecyclerView.ItemDecoration itemDecoration;
 
@@ -109,7 +110,7 @@ public class PlaylistFragment extends Fragment implements PlaylistContract.View 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(mAdapter);
         recyclerView.setHasFixedSize(true);
-        linearLayout = new LinearLayout(getActivity());
+        linearLayout = new ConstraintLayout(getActivity());
         mPresenter.subscribe();
         subscribePlaylistUpdateEvent();
     }

@@ -116,7 +116,6 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ItemHolder
                     .onErrorReturn(new Func1<Throwable, ArtistInfo>() {
                         @Override
                         public ArtistInfo call(Throwable throwable) {
-                            Toast.makeText(itemHolder.itemView.getContext(), R.string.load_artist_fail, Toast.LENGTH_SHORT).show();
                             return null;
                         }
                     })

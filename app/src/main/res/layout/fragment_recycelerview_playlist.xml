@@ -1,56 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="55dp">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/playlist_new"
-        android:layout_width="fill_parent"
-        android:clickable="true"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
         android:background="?attr/selectableItemBackground"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp">
+        android:clickable="true"
+        android:paddingLeft="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/new_playlist"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="22dp"
             android:tag="tint_accent_color"
             android:tint="?colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_playlist_add" />
 
         <TextView
             android:id="@+id/time1"
             style="@style/TextAppearance.AppCompat.Body2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="22dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="17sp"
-            android:gravity="left"
-            android:textStyle="bold"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="16dp"
+            android:text="@string/create_new_playlist"
             android:textSize="16sp"
-            android:text="@string/create_new_playlist" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/new_playlist"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <ViewStub
         android:id="@+id/main_view_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout="@layout/layout_empty_view_default" />
+        android:layout="@layout/layout_empty_view_default"
+   />
 
     <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
         android:id="@+id/main_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/playlist_new"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playlist_new" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

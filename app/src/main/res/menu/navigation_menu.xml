@@ -25,6 +25,11 @@
         android:id="@+id/playlists"
         android:icon="@drawable/ic_playlist_add"
         android:title="@string/playlists" />
+
+    <item android:id="@+id/folder"
+        android:icon="@drawable/ic_folder_black_24dp"
+        android:title="@string/folder"/>
+
 <item
         android:id="@+id/equalizer"
         android:icon="@drawable/ic_equalizer_black_18dp"

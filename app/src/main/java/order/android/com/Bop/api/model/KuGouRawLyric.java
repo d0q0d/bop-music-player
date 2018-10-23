@@ -2,9 +2,6 @@ package order.android.com.Bop.api.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by hefuyi on 2017/1/20.
- */
 
 public class KuGouRawLyric {
 

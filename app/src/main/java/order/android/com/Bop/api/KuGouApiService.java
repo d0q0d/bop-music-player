@@ -6,9 +6,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
 
-/**
- * Created by hefuyi on 2017/1/20.
- */
 
 public interface KuGouApiService {
 

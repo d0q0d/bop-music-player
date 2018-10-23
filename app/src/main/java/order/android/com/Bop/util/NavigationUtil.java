@@ -16,6 +16,7 @@ import order.android.com.Bop.R;
 import order.android.com.Bop.ui.activity.MainActivity;
 import order.android.com.Bop.ui.fragment.AlbumDetailFragment;
 import order.android.com.Bop.ui.fragment.ArtistDetailFragment;
+import order.android.com.Bop.ui.fragment.FolderSongsFragment;
 import order.android.com.Bop.ui.fragment.PlaylistDetailFragment;
 
 
@@ -50,6 +51,14 @@ public class NavigationUtil {
         Fragment fragment;
         transaction.setCustomAnimations(R.anim.fade_in_slow, R.anim.fade_out_slow,R.anim.fade_in_slow, R.anim.fade_out_slow);
         fragment =  PlaylistDetailFragment.newInstance(playlistID, playlistName, true, transitionViews.second);
+        transaction.hide(((AppCompatActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container));
+        transaction.add(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null).commit();
+    }
+    public static void navigateToFolderSongs(Activity context, String path) {
+        FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+        Fragment fragment = FolderSongsFragment.newInstance(path);
+        transaction.setCustomAnimations(R.anim.fade_in_slow, R.anim.fade_out_slow,R.anim.fade_in_slow, R.anim.fade_out_slow);
         transaction.hide(((AppCompatActivity) context).getSupportFragmentManager().findFragmentById(R.id.fragment_container));
         transaction.add(R.id.fragment_container, fragment);
         transaction.addToBackStack(null).commit();

@@ -2,7 +2,10 @@ package order.android.com.Bop;
 
 import android.Manifest;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -12,6 +15,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
 import order.android.com.Bop.dataloader.SongLoader;
 import order.android.com.Bop.event.MediaUpdateEvent;
 import order.android.com.Bop.injector.component.ApplicationComponent;
@@ -92,5 +97,16 @@ public class BopApp extends Application {
                     + Environment.getExternalStorageDirectory())));
         }
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        Resources res = base.getResources();
+        Locale locale = new Locale("en");
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        res.updateConfiguration(config, res.getDisplayMetrics());
+        super.attachBaseContext(base);
     }
 }

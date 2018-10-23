@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by hefuyi on 2017/1/20.
- */
 
 public class KuGouSearchLyricResult {
 

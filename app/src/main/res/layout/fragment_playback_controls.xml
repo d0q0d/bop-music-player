@@ -337,6 +337,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
+        android:inputType="number"
             android:layout_marginRight="3dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"

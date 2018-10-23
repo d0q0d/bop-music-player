@@ -28,7 +28,15 @@
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
-
+    <style name="ListItemTitleStyle" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="Theme.Intro" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
     <style name="ListItemSubTitleStyle" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>

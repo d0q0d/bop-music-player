@@ -1,11 +1,10 @@
 package order.android.com.Bop.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-
-import order.android.com.Bop.util.SortOrder;
 
 /**
  * Created by hefuyi on 2016/11/3.
@@ -23,6 +22,8 @@ public class PreferencesUtility {
     private static final String TOGGLE_ALBUM_GRID = "toggle_album_grid";
     private static final String TOGGLE_PLAYLIST_VIEW = "toggle_playlist_view";
     private static final String START_PAGE_INDEX = "start_page_index";
+    private static final String INTRO_SHOWN = "intro_shown";
+    private static final String PV = "pv";
     private static PreferencesUtility sInstance;
 
     private static volatile SharedPreferences mPreferences;
@@ -42,8 +43,30 @@ public class PreferencesUtility {
         return sInstance;
     }
 
+    public static String getReadableDurationString(long songDurationMillis) {
+        long minutes = (songDurationMillis / 1000) / 60;
+        long seconds = (songDurationMillis / 1000) % 60;
+        if (minutes < 60) {
+            return String.format("%01d:%02d", minutes, seconds);
+        } else {
+            long hours = minutes / 60;
+            minutes = minutes % 60;
+            return String.format("%d:%02d:%02d", hours, minutes, seconds);
+        }
+    }
+
     public void setOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
         mPreferences.registerOnSharedPreferenceChangeListener(listener);
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    public void setIntroShown() {
+        // don't use apply here
+        mPreferences.edit().putBoolean(INTRO_SHOWN, true).commit();
+    }
+
+    public final boolean introShown() {
+        return mPreferences.getBoolean(INTRO_SHOWN, false);
     }
 
     public boolean isArtistsInGrid() {
@@ -53,6 +76,16 @@ public class PreferencesUtility {
     public void setArtistsInGrid(final boolean b) {
         final SharedPreferences.Editor editor = mPreferences.edit();
         editor.putBoolean(TOGGLE_ARTIST_GRID, b);
+        editor.apply();
+    }
+
+    public boolean getPV() {
+        return mPreferences.getBoolean(PV, false);
+    }
+
+    public void setPV(final boolean b) {
+        final SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putBoolean(PV, b);
         editor.apply();
     }
 
@@ -67,7 +100,7 @@ public class PreferencesUtility {
     }
 
     public int getStartPageIndex() {
-        return mPreferences.getInt(START_PAGE_INDEX, 0);
+        return mPreferences.getInt(START_PAGE_INDEX, 2);
     }
 
     public void setStartPageIndex(final int index) {
@@ -133,28 +166,17 @@ public class PreferencesUtility {
     }
 
     public String getArtistArt(long artistID) {
-        return mPreferences.getString(ARTIST_ART_URL+artistID,"");
+        return mPreferences.getString(ARTIST_ART_URL + artistID, "");
     }
 
     public int getPlaylistView() {
-        return mPreferences.getInt(TOGGLE_PLAYLIST_VIEW ,0);
+        return mPreferences.getInt(TOGGLE_PLAYLIST_VIEW, 0);
     }
 
     public void setPlaylistView(final int i) {
         final SharedPreferences.Editor editor = mPreferences.edit();
         editor.putInt(TOGGLE_PLAYLIST_VIEW, i);
         editor.apply();
-    }
-    public static String getReadableDurationString(long songDurationMillis) {
-        long minutes = (songDurationMillis / 1000) / 60;
-        long seconds = (songDurationMillis / 1000) % 60;
-        if (minutes < 60) {
-            return String.format("%01d:%02d", minutes, seconds);
-        } else {
-            long hours = minutes / 60;
-            minutes = minutes % 60;
-            return String.format("%d:%02d:%02d", hours, minutes, seconds);
-        }
     }
 
 }

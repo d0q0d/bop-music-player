@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by hefuyi on 2016/11/3.
- */
 
 public class LastfmArtist {
 

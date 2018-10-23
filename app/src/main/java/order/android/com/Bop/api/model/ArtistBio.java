@@ -2,9 +2,6 @@ package order.android.com.Bop.api.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by hefuyi on 2016/11/3.
- */
 
 public class ArtistBio {
 
